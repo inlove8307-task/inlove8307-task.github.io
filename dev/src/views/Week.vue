@@ -8,7 +8,8 @@
     <article>
       <data-filter
         v-bind:code="code"
-        v-bind:disabled="true">
+        v-bind:disabled="true"
+        v-show="filter">
       </data-filter>
       <ol>
         <li
@@ -31,6 +32,10 @@
         </li>
       </ol>
     </article>
+    <span class="menu">
+      <button @click="write"><i class="material-icons">edit</i></button>
+      <button @click="filter = !filter" v-bind:class="{ active: filter }"><i class="material-icons">search</i></button>
+    </span>
   </section>
 </template>
 
@@ -47,7 +52,8 @@ export default {
   },
   data(){
     return {
-      code: 'C01'
+      code: 'C01',
+      filter: false
     }
   },
   methods: {
@@ -67,6 +73,17 @@ export default {
       }
 
       return result
+    },
+    write(){
+      this.$router.push({
+        name: 'write',
+        params: {
+          data: {
+            CODE: this.code,
+            DATE: moment().format('YYYYMMDD')
+          }
+        }
+      })
     }
   },
   computed: {
@@ -149,6 +166,35 @@ export default {
         font-weight: 400;
         font-size: 12px;
         color: #fff;
+      }
+    }
+
+    .menu {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 10;
+      height:40px;
+
+      button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        float: left;
+        width: 40px;
+        height: 100%;
+        border: 0;
+        border-left: 1px solid #222;
+        background-color: #333;
+        box-shadow: inset 1px 0 #444;
+        text-decoration: none;
+        color: #fff;
+        cursor: pointer;
+
+        &.active {
+          background-color: #222;
+          box-shadow: none;
+        }
       }
     }
 

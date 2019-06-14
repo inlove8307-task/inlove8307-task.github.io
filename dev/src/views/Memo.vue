@@ -6,9 +6,10 @@
     <article>
       <data-filter
         v-bind:code="code"
-        v-bind:disabled="false">
+        v-bind:disabled="false"
+        v-show="filter">
       </data-filter>
-      <ul>
+      <ul v-if="data.length">
         <memo-post
           v-for="post in data"
           v-bind:key="post.key"
@@ -16,9 +17,11 @@
           v-bind:code="code">
         </memo-post>
       </ul>
+      <p v-else>새 메모를 등록하세요</p>
     </article>
     <span class="menu">
       <button @click="write"><i class="material-icons">edit</i></button>
+      <button @click="filter = !filter" v-bind:class="{ active: filter }"><i class="material-icons">search</i></button>
     </span>
   </section>
 </template>
@@ -31,7 +34,8 @@ import MemoPost from '../components/MemoPost'
 export default {
   data(){
     return {
-      code: 'C02'
+      code: 'C02',
+      filter: false
     }
   },
   components: {
@@ -127,6 +131,11 @@ export default {
         text-decoration: none;
         color: #fff;
         cursor: pointer;
+
+        &.active {
+          background-color: #222;
+          box-shadow: none;
+        }
       }
     }
 
@@ -142,6 +151,15 @@ export default {
         margin: 10px;
         padding: 0;
         list-style: none;
+      }
+
+      p {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 400;
+        font-size: 12px;
       }
     }
   }
