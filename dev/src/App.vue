@@ -82,12 +82,17 @@ body {
         float: left;
         width: 40px;
         height: 100%;
-        border-left: 1px solid #444;
         border-right: 1px solid #222;
+        box-shadow: inset 1px 0 0 #444;
         background-color: #333;
         text-decoration: none;
         color: #fff;
         cursor: pointer;
+
+        &.router-link-exact-active {
+          background-color: #222;
+          box-shadow: none;
+        }
       }
     }
   }
