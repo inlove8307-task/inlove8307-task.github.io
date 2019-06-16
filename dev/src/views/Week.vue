@@ -34,7 +34,7 @@
     </article>
     <span class="menu">
       <button @click="write"><i class="material-icons">edit</i></button>
-      <button @click="filter = !filter" v-bind:class="{ active: filter }"><i class="material-icons">search</i></button>
+      <button @click="filter = !filter" class="search" v-bind:class="{ active: filter }"><i class="material-icons">search</i></button>
     </span>
   </section>
 </template>
@@ -129,144 +129,143 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  section {
+section {
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    height: 40px;
+    border-bottom: 1px solid #333;
+    background-color: #444;
+    box-shadow: 0 1px 7px #777;
+    text-align: center;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 100%;
+      border: 0;
+      background-color: transparent;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    span {
+      font-family: 'Noto Sans KR', 'Malgun Gothic';
+      font-weight: 400;
+      font-size: 12px;
+      color: #fff;
+    }
+  }
+
+  .menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    height:40px;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      float: left;
+      width: 40px;
+      height: 100%;
+      border: 0;
+      border-left: 1px solid #222;
+      background-color: #333;
+      box-shadow: inset 1px 0 #444;
+      text-decoration: none;
+      color: #fff;
+      cursor: pointer;
+
+      &.active {
+        background-color: #222;
+        box-shadow: none;
+      }
+    }
+  }
+
+  article {
     overflow: hidden;
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: #fff;
 
-    header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-      box-sizing: border-box;
-      height: 40px;
-      border-bottom: 1px solid #333;
-      background-color: #444;
-      box-shadow: 0 1px 7px #777;
-      text-align: center;
-
-      button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 40px;
-        height: 100%;
-        border: 0;
-        background-color: transparent;
-        color: #fff;
-        cursor: pointer;
-      }
-
-      span {
-        font-family: 'Noto Sans KR', 'Malgun Gothic';
-        font-weight: 400;
-        font-size: 12px;
-        color: #fff;
-      }
-    }
-
-    .menu {
-      position: absolute;
-      top: 0;
-      right: 0;
-      z-index: 10;
-      height:40px;
-
-      button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        float: left;
-        width: 40px;
-        height: 100%;
-        border: 0;
-        border-left: 1px solid #222;
-        background-color: #333;
-        box-shadow: inset 1px 0 #444;
-        text-decoration: none;
-        color: #fff;
-        cursor: pointer;
-
-        &.active {
-          background-color: #222;
-          box-shadow: none;
-        }
-      }
-    }
-
-    article {
-      overflow: hidden;
+    &>ol { /* week */
       flex: 1;
       display: flex;
-      flex-direction: column;
+      margin: 10px;
+      padding: 0;
+      list-style: none;
 
-      &>ol { /* week */
+      &>li {
+        overflow: hidden;
         flex: 1;
-        display: flex;
-        margin: 10px;
+        margin: 0 0 0 10px;
         padding: 0;
-        list-style: none;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 1px 1px 5px #ddd;
 
-        &>li {
-          overflow: hidden;
-          flex: 1;
-          margin: 0 0 0 10px;
+        &:first-child {
+          margin-left: 0;
+        }
+
+        &>ol { /* date */
+          overflow-x: hidden;
+          overflow-y: auto;
+          margin: 0;
           padding: 0;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          background-color: #fff;
-          box-shadow: 1px 1px 5px #ddd;
+          height: 100%;
+          list-style: none;
 
-          &:first-child {
-            margin-left: 0;
-          }
-
-          &>ol { /* date */
-            overflow-x: hidden;
-            overflow-y: auto;
+          &>li {
             margin: 0;
             padding: 0;
-            height: 100%;
-            list-style: none;
+            border-bottom: 1px solid #ccc;
 
-            &>li {
+            strong {
+              display: block;
+              padding: 10px;
+              font-family: 'Noto Sans KR', 'Malgun Gothic';
+              font-weight: 400;
+              font-size: 12px;
+
+              &.weekend{
+                color: #f00;
+              }
+            }
+
+            ul { /* task */
               margin: 0;
               padding: 0;
-              border-bottom: 1px solid #ccc;
+              border-top: 1px dashed #ccc;
+              background-color: #efefef;
+              list-style: none;
 
-              strong {
-                display: block;
+              li {
+                margin: 0;
                 padding: 10px;
+                border-top: 1px dashed #ccc;
                 font-family: 'Noto Sans KR', 'Malgun Gothic';
-                font-weight: 400;
                 font-size: 12px;
 
-                &.weekend{
-                  color: #f00;
-                }
-              }
-
-              ul { /* task */
-                margin: 0;
-                padding: 0;
-                border-top: 1px dashed #ccc;
-                background-color: #efefef;
-                list-style: none;
-
-                li {
-                  margin: 0;
-                  padding: 10px;
-                  border-top: 1px dashed #ccc;
-                  font-family: 'Noto Sans KR', 'Malgun Gothic';
-                  font-size: 12px;
-
-                  &:first-child {
-                    border-top: 0;
-                  }
+                &:first-child {
+                  border-top: 0;
                 }
               }
             }
@@ -275,4 +274,12 @@ export default {
       }
     }
   }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  /* ##Device = Most of the Smartphones Mobiles (Portrait) ##Screen = B/w 320px to 479px */
+  .search {
+    display: none !important;
+  }
+}
 </style>
